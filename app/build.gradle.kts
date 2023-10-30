@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.example.yesnot"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.yesnot"
@@ -26,6 +26,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildToolsVersion = "33.0.1"
 }
 
 dependencies {
