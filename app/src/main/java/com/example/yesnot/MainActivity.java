@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,17 +34,29 @@ public class MainActivity extends AppCompatActivity {
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = "https://www.random.org/integers/?num=1&min=1&max=10000&col=1&base=10&format=plain&rnd=new";
+
                 if (NetworkMenager.isNetworkAvailable(getBaseContext())){
+                    String url = "https://www.random.org/integers/?num=1&min=1&max=10000&col=1&base=10&format=plain&rnd=new";
                     new GetUrlData().execute(url);
                 }
                 else{
                     Toast toast = Toast.makeText(getApplicationContext(), "No internet connecton", Toast.LENGTH_SHORT);
                     toast.show();
-                    result.setText("d");
+                    Random random = new Random();
+                    result.setText(AnswerMeager.isEven(random.nextInt(1000) + 1));
                 }
             }
         });
+    }
+    public static class AnswerMeager{
+        public static String isEven(int number){
+            if(number % 2 == 0){
+                return "Yes";
+            }
+            else {
+                return "No";
+            }
+        }
     }
     public static class NetworkMenager{
         public static boolean isNetworkAvailable(Context context){
@@ -53,12 +66,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private class GetUrlData extends AsyncTask<String, String, String> {
-
         protected void onPreExecute(){
             super.onPreExecute();
             result.setText("Wait...");
         }
-
         @Override
         protected String doInBackground(String... strings) {
             String reply = null;
@@ -87,14 +98,12 @@ public class MainActivity extends AppCompatActivity {
                     connection.disconnect();
                 }
             }
-
             return reply;
         }
-
         @Override
         protected void onPostExecute(String reply){
             super.onPostExecute(reply);
-            result.setText(reply);
+            result.setText(AnswerMeager.isEven(Integer.parseInt(reply)));
         }
     }
 }
