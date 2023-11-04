@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">YesNot</string>
+    <string name="generate">Generate</string>
 </resources>
