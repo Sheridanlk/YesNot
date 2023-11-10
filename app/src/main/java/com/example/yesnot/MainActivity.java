@@ -22,15 +22,16 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button generate;
-    private TextView result;
+    private static TextView result;
+    private static Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         result = findViewById(R.id.textView);
-        generate = findViewById(R.id.button);
+        Button generate = findViewById(R.id.button);
+        toast = Toast.makeText(getApplicationContext(), "No internet connecton", Toast.LENGTH_SHORT);
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,11 +48,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private static class AnswerMenager{
+
         public static String  isEven(int number){
             if(number % 2 == 0){
+                result.setTextColor(Color.GREEN);
                 return "Yes";
             }
             else {
+                result.setTextColor(Color.RED);
                 return "No";
             }
         }
@@ -116,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 return reply;
             }
             else{
+                toast.show();
                 reply = AnswerMenager.RandomAnswer();
                 return reply;
             }
@@ -123,16 +128,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String reply){
             super.onPostExecute(reply);
-            if(!NetworkMenager.isNetworkAvailable(getBaseContext())){
-                Toast toast = Toast.makeText(getApplicationContext(), "No internet connecton", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-            if(Objects.equals(reply, "Yes")){
-                result.setTextColor(Color.GREEN);
-            }
-            else {
-                result.setTextColor(Color.RED);
-            }
             result.setText(reply);
         }
     }
