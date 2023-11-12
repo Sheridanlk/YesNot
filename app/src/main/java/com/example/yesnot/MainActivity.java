@@ -3,6 +3,7 @@ package com.example.yesnot;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -21,10 +22,10 @@ import java.util.Objects;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String PREFS_FILE = "Clicks";
     private static TextView result;
     private static Toast toast;
-
+    static SharedPreferences settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         result = findViewById(R.id.textView);
         Button generate = findViewById(R.id.button);
         toast = Toast.makeText(getApplicationContext(), "No internet connecton", Toast.LENGTH_SHORT);
+        settings = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,8 +49,18 @@ public class MainActivity extends AppCompatActivity {
             return networkInfo != null && networkInfo.isConnected();
         }
     }
+    public static class Pref{
+        public static void saveClicks(int clicks){
+            SharedPreferences.Editor prefEditor = settings.edit();
+            prefEditor.putInt("YesNoClicks", clicks);
+            prefEditor.apply();
+        }
+        public static int getClicks(){
+                int clicks = settings.getInt("YesNoClicks", 0);
+                return clicks;
+        }
+    }
     private static class AnswerMenager{
-
         public static String  isEven(int number){
             if(number % 2 == 0){
                 result.setTextColor(Color.GREEN);
@@ -60,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         public static String  ApiAnswer(){
-           String url = "https://www.random.org/integers/?num=1&min=1&max=10000&col=1&base=10&format=plain&rnd=new";
+            int clicks = Pref.getClicks();
+            String url = "https://www.random.org/integers/?num=1&min=1&max=10000&col=1&base=10&format=plain&rnd=new";
             String reply = null;
             HttpURLConnection connection = null;
 
@@ -88,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             if (reply != null){
+                clicks += 1;
+                Pref.saveClicks(clicks);
                 return isEven(Integer.parseInt(reply));
             }
             else {
@@ -97,12 +112,16 @@ public class MainActivity extends AppCompatActivity {
         }
         public static String RandomAnswer(){
             try {
-                Thread.sleep(500);
+                Thread.sleep(450);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            int clicks = Pref.getClicks();
             Random random = new Random();
-            return isEven(random.nextInt(1000) + 1);
+            int number = (random.nextInt(1000) + 1) + clicks;
+            clicks = 0;
+            Pref.saveClicks(clicks);
+            return isEven(number);
         }
 
     }
