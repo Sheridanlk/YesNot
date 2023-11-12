@@ -1,6 +1,7 @@
 package com.example.yesnot;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -22,24 +23,30 @@ import java.util.Objects;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+
+    ViewPager2 myViewPager2;
+    Adapter myAdapter;
     private static final String PREFS_FILE = "Clicks";
-    private static TextView result;
-    private static Toast toast;
     static SharedPreferences settings;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        result = findViewById(R.id.textView);
-        Button generate = findViewById(R.id.button);
-        toast = Toast.makeText(getApplicationContext(), "No internet connecton", Toast.LENGTH_SHORT);
+
         settings = getSharedPreferences(PREFS_FILE, MODE_PRIVATE);
-        generate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new GetAnswer().execute();
-            }
-        });
+
+        myViewPager2 = findViewById(R.id.viewPager2);
+        myAdapter = new Adapter(getSupportFragmentManager(), getLifecycle());
+
+        myAdapter.addFragment(new BlankFragment2());
+        myAdapter.addFragment(new BlankFragment1());
+        myAdapter.addFragment(new BlankFragment3());
+
+        myViewPager2.setOrientation(ViewPager2.ORIENTATION_HORIZONTAL);
+        myViewPager2.setAdapter(myAdapter);
+        myViewPager2.setCurrentItem(1,false);
     }
 
     public static class NetworkMenager{
@@ -56,23 +63,20 @@ public class MainActivity extends AppCompatActivity {
             prefEditor.apply();
         }
         public static int getClicks(){
-                int clicks = settings.getInt("YesNoClicks", 0);
-                return clicks;
+            int clicks = settings.getInt("YesNoClicks", 0);
+            return clicks;
         }
     }
-    private static class AnswerMenager{
-        public static String  isEven(int number){
-            if(number % 2 == 0){
-                result.setTextColor(Color.GREEN);
+    static class AnswerMenager {
+        public static String isEven(int number) {
+            if (number % 2 == 0) {
                 return "Yes";
-            }
-            else {
-                result.setTextColor(Color.RED);
+            } else {
                 return "No";
             }
         }
         public static String  ApiAnswer(){
-            int clicks = Pref.getClicks();
+            int clicks = MainActivity.Pref.getClicks();
             String url = "https://www.random.org/integers/?num=1&min=1&max=10000&col=1&base=10&format=plain&rnd=new";
             String reply = null;
             HttpURLConnection connection = null;
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (reply != null){
                 clicks += 1;
-                Pref.saveClicks(clicks);
+                MainActivity.Pref.saveClicks(clicks);
                 return isEven(Integer.parseInt(reply));
             }
             else {
@@ -116,38 +120,13 @@ public class MainActivity extends AppCompatActivity {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            int clicks = Pref.getClicks();
+            int clicks = MainActivity.Pref.getClicks();
             Random random = new Random();
             int number = (random.nextInt(1000) + 1) + clicks;
             clicks = 0;
-            Pref.saveClicks(clicks);
+            MainActivity.Pref.saveClicks(clicks);
             return isEven(number);
         }
 
-    }
-    private class GetAnswer extends AsyncTask<String, String, String> {
-        protected void onPreExecute(){
-            super.onPreExecute();
-            result.setTextColor(Color.WHITE);
-            result.setText("Wait...");
-        }
-        @Override
-        protected String doInBackground(String... strings) {
-            String reply = null;
-            if(NetworkMenager.isNetworkAvailable(getBaseContext())){
-                reply = AnswerMenager.ApiAnswer();
-                return reply;
-            }
-            else{
-                toast.show();
-                reply = AnswerMenager.RandomAnswer();
-                return reply;
-            }
-        }
-        @Override
-        protected void onPostExecute(String reply){
-            super.onPostExecute(reply);
-            result.setText(reply);
-        }
     }
 }
