@@ -23,6 +23,7 @@ import android.widget.Toast;
 public class BlankFragment1 extends Fragment {
     private static TextView result;
     private static Toast toast;
+    private static Button generate;
 
 
     @Override
@@ -39,7 +40,7 @@ public class BlankFragment1 extends Fragment {
     public void  onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         result = view.findViewById(R.id.textView);
-        Button generate = view.findViewById(R.id.button);
+        generate = view.findViewById(R.id.button);
         toast = Toast.makeText(view.getContext(), "No internet connecton", Toast.LENGTH_SHORT);
         generate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,23 +53,26 @@ public class BlankFragment1 extends Fragment {
         protected void onPreExecute(){
             super.onPreExecute();
             result.setText("Wait...");
+            generate.setEnabled(false);
+
         }
         @Override
         protected String doInBackground(String... strings) {
             String reply = null;
             if(MainActivity.NetworkMenager.isNetworkAvailable(getContext())){
                 reply = MainActivity.AnswerMenager.ApiAnswer();
-                return reply;
             }
             else{
+                toast.cancel();
                 toast.show();
                 reply = MainActivity.AnswerMenager.RandomAnswer();
-                return reply;
             }
+            return reply;
         }
         @Override
         protected void onPostExecute(String reply){
             super.onPostExecute(reply);
+            generate.setEnabled(true);
             result.setText(reply);
         }
     }
