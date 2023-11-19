@@ -1,10 +1,6 @@
 package com.example.yesnot;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -18,12 +14,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yesnot.sampledata.AnswerManager;
+import com.example.yesnot.sampledata.NetworkManager;
 
 
 public class BlankFragment1 extends Fragment {
     private static TextView result;
     private static Toast toast;
     private static Button generate;
+
 
 
     @Override
@@ -54,24 +53,32 @@ public class BlankFragment1 extends Fragment {
             super.onPreExecute();
             result.setText("Wait...");
             generate.setEnabled(false);
+            generate.setBackgroundColor(Color.WHITE);
 
         }
         @Override
         protected String doInBackground(String... strings) {
             String reply = null;
-            if(MainActivity.NetworkMenager.isNetworkAvailable(getContext())){
-                reply = MainActivity.AnswerMenager.ApiAnswer();
+            boolean type = true;
+            if(NetworkManager.isNetworkAvailable(getContext())){
+                reply = AnswerManager.ApiAnswer(1000, type);
             }
             else{
                 toast.cancel();
                 toast.show();
-                reply = MainActivity.AnswerMenager.RandomAnswer();
+                reply = AnswerManager.RandomAnswer(1000, type);
             }
             return reply;
         }
         @Override
         protected void onPostExecute(String reply){
             super.onPostExecute(reply);
+            if (reply.equals("Yes")){
+                generate.setBackgroundColor(Color.rgb(141, 217, 24));
+            }
+            else {
+                generate.setBackgroundColor(Color.rgb(190, 52, 38));
+            }
             generate.setEnabled(true);
             result.setText(reply);
         }

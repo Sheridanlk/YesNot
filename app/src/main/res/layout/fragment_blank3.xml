@@ -7,14 +7,74 @@
     tools:context=".BlankFragment3">
 
 
+    <Button
+        android:id="@+id/button"
+        style="@style/Widget.Material3.Button.Icon"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rippleColor="@android:color/transparent" />
+
+    <Button
+        android:id="@+id/PlusBtn"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:text="+"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.926"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.837" />
+
+    <Button
+        android:id="@+id/MinusBtn"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="8dp"
+        android:text="-"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.926"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PlusBtn" />
+
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="помагите!"
-        android:textSize="24sp"
+        android:text="Yra 4:30 am"
+        android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextNumber3"
+        style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
+        android:layout_width="149dp"
+        android:layout_height="95dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="1"
+        android:textAlignment="center"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/MinusBtn"
+        app:layout_constraintEnd_toStartOf="@+id/PlusBtn"
+        app:layout_constraintHorizontal_bias="0.784"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PlusBtn"
+        app:layout_constraintVertical_bias="0.459" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,12 +10,29 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager2"
-        android:layout_width="410dp"
-        android:layout_height="657dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabDots"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:background="#00FFFFFF"
+        android:translationY="-10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIconTint="#00FFFFFF"
+        app:tabIndicatorColor="#FFFFFF"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@color/greygrey" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

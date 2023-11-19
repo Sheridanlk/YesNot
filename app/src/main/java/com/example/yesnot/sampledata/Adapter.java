@@ -1,4 +1,4 @@
-package com.example.yesnot;
+package com.example.yesnot.sampledata;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
