@@ -59,7 +59,7 @@ public class BlankFragment1 extends Fragment {
         @Override
         protected String doInBackground(String... strings) {
             String reply = null;
-            boolean type = true;
+            int type = 1;
             if(NetworkManager.isNetworkAvailable(getContext())){
                 reply = AnswerManager.ApiAnswer(1000, type);
             }

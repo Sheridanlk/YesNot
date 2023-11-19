@@ -23,7 +23,7 @@ public class AnswerManager {
             return "No";
         }
     }
-    public static String  ApiAnswer(int UpLim, boolean type){
+    public static String  ApiAnswer(int UpLim, int type){
         int clicks = MainActivity.PreferenceManager.getClicks();
         String url = "https://www.random.org/integers/?num=1&min=1&max=" + UpLim + "&col=1&base=10&format=plain&rnd=new";
         String reply = null;
@@ -55,11 +55,15 @@ public class AnswerManager {
         if (reply != null){
             clicks += 1;
             MainActivity.PreferenceManager.saveClicks(clicks);
-            if (type) {
-                return isEven(Integer.parseInt(reply));
-            }
-            else {
-                return HeadsOrTails(Integer.parseInt(reply));
+            switch (type) {
+                case 1:
+                    return isEven(Integer.parseInt(reply));
+                case 2:
+                    return HeadsOrTails(Integer.parseInt(reply));
+                case 3:
+                    return reply;
+                default:
+                    return "";
             }
         }
         else {
@@ -67,7 +71,7 @@ public class AnswerManager {
         }
 
     }
-    public static String RandomAnswer(int lim, boolean type){
+    public static String RandomAnswer(int lim, int type){
         try {
             Thread.sleep(450);
         } catch (InterruptedException e) {
@@ -78,11 +82,15 @@ public class AnswerManager {
         int number = (random.nextInt(lim) + 1) + clicks;
         clicks = 0;
         MainActivity.PreferenceManager.saveClicks(clicks);
-        if (type) {
-            return isEven(number);
-        }
-        else {
-            return HeadsOrTails(number);
+        switch (type){
+            case (1):
+                return isEven(number);
+            case (2):
+                return HeadsOrTails(number);
+            case (3):
+                return String.valueOf(number);
+            default:
+                return "";
         }
     }
 }
