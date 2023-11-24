@@ -76,19 +76,18 @@
     <EditText
         android:id="@+id/editTextNumber"
         style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
-        android:layout_width="149dp"
-        android:layout_height="95dp"
-        android:ems="10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:inputType="number"
         android:text="3"
         android:textAlignment="center"
         android:textSize="34sp"
         app:layout_constraintBottom_toTopOf="@+id/MinusBtn"
         app:layout_constraintEnd_toStartOf="@+id/PlusBtn"
-        app:layout_constraintHorizontal_bias="0.784"
+        app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PlusBtn"
-        app:layout_constraintVertical_bias="0.459" />
+        app:layout_constraintVertical_bias="0.45" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
