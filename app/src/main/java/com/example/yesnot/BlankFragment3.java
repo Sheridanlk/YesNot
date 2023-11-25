@@ -54,7 +54,14 @@ public class BlankFragment3 extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().equals("") && Integer.parseInt(s.toString()) > 0) {
-                    UpLimitGeneration[0] = Integer.parseInt(s.toString());UpLimitGeneration[0] = Integer.parseInt(s.toString());
+                    if (Integer.parseInt(s.toString()) <= 100) {
+                        UpLimitGeneration[0] = Integer.parseInt(s.toString());
+                        UpLimitGeneration[0] = Integer.parseInt(s.toString());
+                    }
+                    else {
+                        UpLimitGeneration[0] = 100;
+                        editText.setText("100");
+                    }
                 }
                 else {
                     UpLimitGeneration[0] = 3;
