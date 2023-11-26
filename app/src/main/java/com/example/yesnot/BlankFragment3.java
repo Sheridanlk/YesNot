@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.yesnot.databinding.FragmentBlank3Binding;
 import com.example.yesnot.sampledata.AnswerManager;
 import com.example.yesnot.sampledata.NetworkManager;
 
@@ -25,6 +26,7 @@ public class BlankFragment3 extends Fragment {
     public static Button generateBtn, plusBtn, minusBtn, editBtn;
     public static EditText editText;
     public static TextView textView;
+
     public static Toast toast;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,17 @@ public class BlankFragment3 extends Fragment {
                 }
             }
         });
+
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
+                bottomSheetFragment.show(requireActivity().getSupportFragmentManager(), "sus");
+
+            }
+        });
     }
+
 
     private class GetAnswer extends AsyncTask<String, String, String> {
         protected void onPreExecute(){
