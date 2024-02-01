@@ -32,7 +32,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
                 dismiss();
             }
         });
-        int n = 5;
+        
+
+        int n = 100;
         TableLayout tableLayout = binding.layout ;
         EditText[] editTexts = new EditText[n];
         TableRow[] tableRows = new  TableRow[n];
@@ -58,6 +60,9 @@ public class BottomSheetFragment extends BottomSheetDialogFragment {
 
             tableLayout.addView(tableRows[i]);
         }
+
+
+
 
         return binding.getRoot();
 
