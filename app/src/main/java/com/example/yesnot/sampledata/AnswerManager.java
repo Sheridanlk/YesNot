@@ -53,7 +53,13 @@ public class AnswerManager {
             }
         }
         if (reply != null){
-            clicks += 1;
+            if (clicks < 1000) {
+                clicks += 1;
+            }
+            else {
+                clicks = 0;
+            }
+
             MainActivity.PreferenceManager.saveClicks(clicks);
             switch (type) {
                 case 1:

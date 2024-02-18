@@ -19,46 +19,48 @@
         app:layout_constraintTop_toTopOf="parent"
         app:rippleColor="@android:color/transparent" />
 
-    <Button
+    <ImageButton
         android:id="@+id/EditBtn"
-        style="@style/Widget.Material3.Button.IconButton.Filled"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:backgroundTint="@color/white"
-        android:text="Edit"
-        android:textAlignment="center"
+        android:src="@android:drawable/ic_menu_edit"
+        android:backgroundTint="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextNumber"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/GenerateBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
     <Button
         android:id="@+id/PlusBtn"
         style="@style/Widget.Material3.Button.IconButton.Filled"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/white"
         android:text="+"
+        android:textColor="@color/grey"
         android:textAlignment="center"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
-        app:layout_constraintTop_toBottomOf="@+id/GenerateBtn"
-        app:layout_constraintVertical_bias="0.282" />
+        app:layout_constraintStart_toEndOf="@+id/EditBtn"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
     <Button
         android:id="@+id/MinusBtn"
         style="@style/Widget.Material3.Button.IconButton.Filled"
         android:layout_width="70dp"
         android:layout_height="70dp"
+        android:layout_marginTop="4dp"
         android:backgroundTint="@color/white"
         android:text="-"
         android:textAlignment="center"
+        android:textColor="@color/grey"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
-        app:layout_constraintTop_toBottomOf="@+id/GenerateBtn"
-        app:layout_constraintVertical_bias="0.765" />
+        app:layout_constraintEnd_toStartOf="@+id/EditBtn"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
 
     <TextView
         android:id="@+id/textView"
@@ -76,15 +78,14 @@
     <EditText
         android:id="@+id/editTextNumber"
         style="@style/Widget.Material3.AutoCompleteTextView.FilledBox"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:inputType="number"
         android:text="3"
         android:textAlignment="center"
         android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/GenerateBtn" />
 

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +24,8 @@ import com.example.yesnot.sampledata.NetworkManager;
 
 
 public class BlankFragment3 extends Fragment {
-    public static Button generateBtn, plusBtn, minusBtn, editBtn;
+    public static Button generateBtn, plusBtn, minusBtn;
+    public static ImageButton editBtn;
     public static EditText editText;
     public static TextView textView;
 
@@ -106,7 +108,10 @@ public class BlankFragment3 extends Fragment {
             public void onClick(View view) {
                 BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                 bottomSheetFragment.show(requireActivity().getSupportFragmentManager(), "sus");
-
+                Bundle bundle = new Bundle();
+                bundle.putInt("bundlekey", UpLimitGeneration[0]);
+                bottomSheetFragment.setArguments(bundle);
+                //getChildFragmentManager().setFragmentResult("123", bundle);
             }
         });
     }
