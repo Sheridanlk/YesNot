@@ -21,25 +21,19 @@
             android:layout_height="wrap_content"
             android:foregroundGravity="top"
             android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:backgroundTint="@android:color/transparent"
-            android:src="@drawable/baseline_close_24" />
-
-        <TextView
-            android:id="@+id/texttt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Edit"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:backgroundTint="@android:color/transparent"
+            android:src="@drawable/rectangle_3" />
+        
+
 
         <TableLayout
             android:background="@color/white"
             android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/texttt" />
+            android:layout_below="@id/dismissBtn" />
+
 
     </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

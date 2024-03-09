@@ -3,7 +3,7 @@
     <style name="Base.Theme.YesNot" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="android:statusBarColor">@color/greydark</item>
+        <item name="android:statusBarColor">@color/grey</item>
     </style>
 
     <style name="Theme.YesNot" parent="Base.Theme.YesNot" />

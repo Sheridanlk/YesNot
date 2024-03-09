@@ -3,6 +3,13 @@
     <style name="Base.Theme.YesNot" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-        <item name="android:statusBarColor">@color/greydark</item>
+        <item name="android:statusBarColor">@color/grey</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="android:background">@color/grey</item>
     </style>
 </resources>

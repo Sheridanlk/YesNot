@@ -1,11 +1,11 @@
 package com.example.yesnot;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -18,18 +18,23 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.yesnot.databinding.FragmentBlank3Binding;
 import com.example.yesnot.sampledata.AnswerManager;
 import com.example.yesnot.sampledata.NetworkManager;
 
+import java.util.ArrayList;
+
 
 public class BlankFragment3 extends Fragment {
-    public static Button generateBtn, plusBtn, minusBtn;
-    public static ImageButton editBtn;
+    public static Button generateBtn;
+    public static ImageButton plusBtn, editBtn, minusBtn;
     public static EditText editText;
     public static TextView textView;
+    public String[] values = new String[100];
+    final int[] UpLimitGeneration = new int[1];
 
-    public static Toast toast;
+
+
+    public static Toast toast, toasterror1, toasterror2;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +54,17 @@ public class BlankFragment3 extends Fragment {
         textView = view.findViewById(R.id.textView);
         editText.setCursorVisible(false);
         toast = Toast.makeText(view.getContext(), "No internet connecton", Toast.LENGTH_SHORT);
-        final int[] UpLimitGeneration = new int[1];
+        toasterror1 = Toast.makeText(view.getContext(), "Число должно быть не меньше 2", Toast.LENGTH_SHORT);
+        toasterror2 = Toast.makeText(view.getContext(), "Число должно быть не больше 100", Toast.LENGTH_SHORT);
         UpLimitGeneration[0] = 3;
+
+        getParentFragmentManager().setFragmentResultListener("loviarry", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                values = bundle.getStringArray("bundlekey2");
+            }
+        });
+
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -58,18 +72,11 @@ public class BlankFragment3 extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().equals("") && Integer.parseInt(s.toString()) > 0) {
-                    if (Integer.parseInt(s.toString()) <= 100) {
-                        UpLimitGeneration[0] = Integer.parseInt(s.toString());
-                        UpLimitGeneration[0] = Integer.parseInt(s.toString());
-                    }
-                    else {
-                        UpLimitGeneration[0] = 100;
-                        editText.setText("100");
-                    }
+                    UpLimitGeneration[0] = Integer.parseInt(s.toString());;
                 }
                 else {
-                    UpLimitGeneration[0] = 3;
-                    editText.setText("3");
+                    UpLimitGeneration[0] = 2;
+                    editText.setText("2");
                     editText.selectAll();
                 }
             }
@@ -81,7 +88,21 @@ public class BlankFragment3 extends Fragment {
         generateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               new GetAnswer().execute(String.valueOf(UpLimitGeneration[0]));
+                if (UpLimitGeneration[0] < 2){
+                    editText.setText("2");
+                    toasterror1.cancel();
+                    toasterror1.show();
+                }
+                else {
+                    if(UpLimitGeneration[0] > 100){
+                        editText.setText("100");
+                        toasterror2.cancel();
+                        toasterror2.show();
+                    }
+                    else{
+                        new GetAnswer().execute(String.valueOf(UpLimitGeneration[0]));
+                    }
+                }
             }
         });
         plusBtn.setOnClickListener(new View.OnClickListener() {
@@ -106,12 +127,13 @@ public class BlankFragment3 extends Fragment {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                editBtn.setEnabled(false);
                 BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
                 bottomSheetFragment.show(requireActivity().getSupportFragmentManager(), "sus");
                 Bundle bundle = new Bundle();
-                bundle.putInt("bundlekey", UpLimitGeneration[0]);
+                bundle.putInt("bundleInt", UpLimitGeneration[0]);
+                bundle.putStringArray("bundleArray", values);
                 bottomSheetFragment.setArguments(bundle);
-                //getChildFragmentManager().setFragmentResult("123", bundle);
             }
         });
     }
@@ -141,7 +163,24 @@ public class BlankFragment3 extends Fragment {
         protected void onPostExecute(String reply){
             super.onPostExecute(reply);
             generateBtn.setEnabled(true);
-            textView.setText(reply);
+
+            boolean flag = true;
+            for (int i = 0; i < UpLimitGeneration[0]; i++){
+                if (values[i] == null){
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag){
+                textView.setText(values[Integer.parseInt(reply) - 1]);
+            }
+            else {
+                textView.setText(reply);
+            }
+
         }
     }
+
+
+
 }
